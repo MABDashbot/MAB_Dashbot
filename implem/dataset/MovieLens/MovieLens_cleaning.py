@@ -1,6 +1,5 @@
 import csv
 
-root = '/home/sandrine/DashBot/bandits-and-applications/code/DashBot/implem/dataset/MovieLens'
 
 with open(f'{root}/raw_movielens.csv', newline='') as csvfile:
 	attributes = csvfile.readline().strip().split('|')

@@ -8,7 +8,7 @@ Before you begin, ensure you have met the following requirements:
 * You have jupyter notebook installed
 
 ## Running
-The script `expe.py` allows to reproduce experiments and will create result files for each case in the directory `experiments/results`. Experiment cases are based on parameters of `expe.py` explained in the following :
+The script `expe.py` allows to reproduce experiments and will create result files for each case in folder `experiment/results`. Experiment cases are based on parameters of `expe.py` explained in the following :
 
 * idx : int - Id of the experiment
 * algos : string - Name of method(s) from {Random, Egreedy, MAB, Explanation} (Egreedy is for Semantic 1 and MAB for Semantic 2). In the case where several methods are used, the parameter takes the following form : 'Algo1/Algo2'.
@@ -21,4 +21,13 @@ The script `expe.py` allows to reproduce experiments and will create result file
 * inclusion : boolean - if True we use the inclusion.
 * history : boolean - if True we check history.
 
-The file 
+The file `graphs.ipynb` allows to generate the figures based on result files in folder `experiment/results`. It is divided into three parts : 
+* The first is for the evolution of time and #steps as function of #attributes.
+* The second is for the evolution of F1-score as function of clicks and #steps.
+* The third is for the evolution of time and #steps as function of #panels in target.
+
+## Repository organization
+MAB_Dashbot repository is organised as follows:
+* /implem : directory of source code and cleaned (or preprocessed) dataset.
+* /experiment/figures : directory of all figures used in the paper.
+* /experiment/results : directory of experiment files used to generate figures of the paper.

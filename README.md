@@ -8,9 +8,9 @@ Before you begin, ensure you have met the following requirements:
 * You have jupyter notebook installed
 
 ## Running
-The script `expe.py` allows to reproduce experiments and will create result files for each case in folder `experiment/results`. Experiment cases are based on parameters of `expe.py` explained in the following :
+The script `expe.py` allows to reproduce experiments and will create result files for each case in folder `experiment/results`. Experiment cases are based on parameters explained in the following :
 
-* idx : int - Id of the experiment
+* idx : int - Id of the experiment 
 * algos : string - Name of method(s) from {Random, Egreedy, MAB, Explanation} (Egreedy is for Semantic 1 and MAB for Semantic 2). In the case where several methods are used, the parameter takes the following form : 'Algo1/Algo2'.
 * explication_ratio : string - Ratio of using each algorithm in alogs. In case where one algorithm is mentioned in algos, the explication_ratio must be 1. If several algorithms are mentioned, the explication_ratio takes the following form : 'x1/x2' using Algo1 x1 times and Algo2 x2 times.
 * epsilon : float - Probablity of Exploration/Exploitation

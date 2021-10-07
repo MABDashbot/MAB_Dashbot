@@ -14,38 +14,43 @@ import random
 import multiprocessing
 
 targets = [ 
-{'groupBy': ['rating'], 'aggregates': {'*': ['count'], 'age': ['min','max','avg']}},
-{'groupBy': ['rating'], 'aggregates': {'*': ['count'], 'g_Comedy': ['min','max','avg']}},
-{'groupBy': ['rating'], 'aggregates': {'*': ['count'], 't': ['min','max','avg']}},
-
-{'groupBy': ['age'], 'aggregates': {'*': ['count'], 'rating': ['min','max','avg']}},
-{'groupBy': ['age'], 'aggregates': {'*': ['count'], 'g_Comedy': ['min','max','avg']}},
-{'groupBy': ['age'], 'aggregates': {'*': ['count'], 't': ['min','max','avg']}},
-
-{'groupBy': ['g_Comedy'], 'aggregates': {'*': ['count'], 'rating': ['min','max','avg']}},
-{'groupBy': ['g_Comedy'], 'aggregates': {'*': ['count'], 'age': ['min','max','avg']}},
-{'groupBy': ['g_Comedy'], 'aggregates': {'*': ['count'], 't': ['min','max','avg']}},
-
-{'groupBy': ['t'], 'aggregates': {'*': ['count'], 'rating': ['min','max','avg']}},
-{'groupBy': ['t'], 'aggregates': {'*': ['count'], 'age': ['min','max','avg']}},
-{'groupBy': ['t'], 'aggregates': {'*': ['count'], 'g_Comedy': ['min','max','avg']}},
+{'groupBy': ['rating'], 'aggregates': {'*': ['count'], 'age': ['avg']}},
+{'groupBy': ['gender'], 'aggregates': {'g_Comedy': ['sum']}}
 ]
 
-n_expe = list(range(1))
-
-ns_attributes = [4,6,8] #Number of attributes in the dataset
-explication_ratios = [ '9/1', '49/1', '99/1'] # Without_Expe/Explication
-exploration_types = ['UCB','Softmax','Standard','Thompson'] # Type of e_greedy
+n_expe = list(range(10)) #Number of runs for each method
 
 epsilon = 0.1 # Epsilon of exploration/exploitation
 exploration_distances = 0.2 #distance of exploration
+ns_attributes = [4,6,8] #Number of attributes in the dataset
 
-#algos = ['Explanation']
-
+#Explanation-1, Explanation-2, Explanation-10
+explication_ratios = ['9/1', '49/1', '99/1'] # with_Explanation
+exploration_types = ['Standard'] # Type of semantic A
+algos = ['Egreedy/Explanation']
 algos = list( itertools.product(*[algos,explication_ratios]) )
-algos = [('MAB','1')]
-
 cases = list( itertools.product(*[n_expe,algos,exploration_types,ns_attributes]) )
+
+#ep-greedy Far_Panel, New_Panel, Alternating_Pnale
+explication_ratios = ['1'] # Without_Explanation
+exploration_types = ['Standard','NewPanel','Hybrid'] # Type of semantic A
+algos = ['Egreedy']
+algos = list( itertools.product(*[algos,explication_ratios]) )
+cases += list( itertools.product(*[n_expe,algos,exploration_types,ns_attributes]) )
+
+#Explanation-100
+explication_ratios = ['1']
+exploration_types = ['Standard'] # Type of semantic A
+algos = ['Explanation']
+algos = list( itertools.product(*[algos,explication_ratios]) )
+cases += list( itertools.product(*[n_expe,algos,exploration_types,ns_attributes]) )
+
+#Semantic 2 : Thompson, e-greedy-E, UCB, Softmax
+explication_ratios = ['1'] # Without_Explanation
+exploration_types = ['UCB','Standard','Softmax','Thompson'] # Type of semantic 2
+algos = ['MAB']
+algos = list( itertools.product(*[algos,explication_ratios]) )
+cases += list( itertools.product(*[n_expe,algos,exploration_types,ns_attributes]) )
 
 def worker(case):
 
@@ -59,6 +64,7 @@ def worker(case):
      nb_attr, targets, inclusion=True, history=True, verbose=False)
 
     experiment.initialize_dashboard_generation()
+    
     while len(experiment.found_panels) < len(targets):
         experiment.eval.start_iteration_time = time.time()
         experiment.suggest_panel()
@@ -71,8 +77,3 @@ def worker(case):
 pool = multiprocessing.Pool(multiprocessing.cpu_count())    
 res = pool.map(worker, cases)
 pool.close()
-
-
-
-
-

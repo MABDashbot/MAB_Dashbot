@@ -26,21 +26,21 @@ ns_attributes = [4,6,8] #Number of attributes in the dataset
 
 #Explanation-1, Explanation-2, Explanation-10
 explication_ratios = ['9/1', '49/1', '99/1'] # with_Explanation
-exploration_types = ['Standard'] # Type of semantic A
+exploration_types = ['Standard'] # Type of semantic 1
 algos = ['Egreedy/Explanation']
 algos = list( itertools.product(*[algos,explication_ratios]) )
 cases = list( itertools.product(*[n_expe,algos,exploration_types,ns_attributes]) )
 
 #ep-greedy Far_Panel, New_Panel, Alternating_Pnale
 explication_ratios = ['1'] # Without_Explanation
-exploration_types = ['Standard','NewPanel','Hybrid'] # Type of semantic A
+exploration_types = ['Standard','NewPanel','Hybrid'] # Type of semantic 1
 algos = ['Egreedy']
 algos = list( itertools.product(*[algos,explication_ratios]) )
 cases += list( itertools.product(*[n_expe,algos,exploration_types,ns_attributes]) )
 
 #Explanation-100
 explication_ratios = ['1']
-exploration_types = ['Standard'] # Type of semantic A
+exploration_types = ['Standard'] # Type of semantic 1
 algos = ['Explanation']
 algos = list( itertools.product(*[algos,explication_ratios]) )
 cases += list( itertools.product(*[n_expe,algos,exploration_types,ns_attributes]) )
